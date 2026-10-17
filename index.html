@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Collocation Flashcards · RU → EN</title>
+<style>
+  :root{
+    --ink:#40342b;
+    --paper:#fffdf7;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family:"Comic Sans MS","Comic Neue","Chalkboard SE","Segoe Print","Marker Felt",cursive,sans-serif;
+    color:var(--ink);
+    background-color:#fdf4e3;
+    background-image:radial-gradient(#f0dfbe 2.2px, transparent 2.2px), radial-gradient(#f6e8cf 2.2px, transparent 2.2px);
+    background-size:34px 34px, 34px 34px;
+    background-position:0 0, 17px 17px;
+    min-height:100vh;
+    padding:28px 20px 48px;
+  }
+  header{max-width:1080px;margin:0 auto 24px;text-align:center}
+  h1{font-size:2rem;margin:0 0 6px;letter-spacing:.5px}
+  h1 .emoji{display:inline-block;transform:rotate(-10deg)}
+  .sub{margin:0 0 14px;font-size:1.02rem;color:#7c6a58}
+  #flipAll{
+    font:inherit;font-weight:700;font-size:1rem;
+    background:#ffd65a;border:3px solid var(--ink);border-radius:999px;
+    padding:9px 22px;cursor:pointer;color:var(--ink);
+    box-shadow:0 4px 0 rgba(64,52,43,.25);
+    transition:transform .12s, box-shadow .12s;
+  }
+  #flipAll:hover{transform:translateY(-1px);box-shadow:0 6px 0 rgba(64,52,43,.25)}
+  #flipAll:active{transform:translateY(2px);box-shadow:0 2px 0 rgba(64,52,43,.25)}
+  main{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px}
+  .card{height:332px;perspective:1100px;cursor:pointer;transform:rotate(var(--tilt,0deg));outline:none}
+  .card:focus-visible .inner{box-shadow:0 0 0 4px #ffd65a}
+  .inner{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .65s cubic-bezier(.4,.2,.2,1)}
+  .card.flipped .inner{transform:rotateY(180deg)}
+  .face{
+    position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+    border:3px solid var(--ink);border-radius:22px;background:var(--paper);
+    box-shadow:0 7px 0 rgba(64,52,43,.14);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:12px;padding:44px 16px 42px;text-align:center;
+  }
+  .face.back{transform:rotateY(180deg);background:var(--tint)}
+  .icon{
+    width:104px;height:104px;border-radius:50%;flex:none;
+    background:rgba(255,255,255,.85);border:3px dashed rgba(64,52,43,.35);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .icon svg{width:84px;height:84px;display:block}
+  .txt{font-size:1.18rem;font-weight:700;line-height:1.32}
+  .txt.small{font-size:.99rem}
+  .lang{
+    position:absolute;bottom:12px;left:50%;transform:translateX(-50%);
+    font-size:.72rem;font-weight:700;letter-spacing:2px;
+    background:var(--ink);color:#fff8ec;border-radius:999px;padding:3px 13px;
+  }
+  .num{position:absolute;top:10px;left:14px;font-size:.85rem;font-weight:700;color:#b3a18c}
+  footer{max-width:1080px;margin:26px auto 0;text-align:center;color:#a08c74;font-size:.9rem}
+  @media (max-width:520px){
+    .txt{font-size:1.05rem}
+    .card{height:316px}
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1><span class="emoji">🎴</span> Collocation Flashcards</h1>
+  <p class="sub">Нажми на карточку, чтобы перевернуть · Click a card to see the English</p>
+  <button id="flipAll" type="button">Перевернуть все · Flip all</button>
+</header>
+<main id="grid"></main>
+<footer>14 cards · Russian on the front, English on the back · the same little doodle on both sides 🎨</footer>
+<script>
+const INK = "#40342b";
+const STAR = "0,-6.5 1.53,-2.1 6.18,-2.01 2.47,0.8 3.82,5.26 0,2.6 -3.82,5.26 -2.47,0.8 -6.18,-2.01 -1.53,-2.1";
+
+const icons = {
+  blush: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="50" cy="52" r="31" fill="#ffe8c9" stroke="${INK}" stroke-width="3.5"/>
+    <path d="M35 47 q5 -6 10 0" fill="none" stroke="${INK}" stroke-width="3.5" stroke-linecap="round"/>
+    <path d="M55 47 q5 -6 10 0" fill="none" stroke="${INK}" stroke-width="3.5" stroke-linecap="round"/>
+    <circle cx="36" cy="57" r="6" fill="#ff9aae"/>
+    <circle cx="64" cy="57" r="6" fill="#ff9aae"/>
+    <path d="M44 66 q6 5 12 0" fill="none" stroke="${INK}" stroke-width="3.5" stroke-linecap="round"/>
+    <path d="M17 32 l-5 -4 M83 36 l5 -4" stroke="#ff9aae" stroke-width="3" stroke-linecap="round"/>
+  </svg>`,
+
+  ice: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <rect x="25" y="24" width="46" height="46" rx="11" fill="#cdeeff" stroke="${INK}" stroke-width="3.5"/>
+    <path d="M33 33 l9 -6" stroke="#8fd0f5" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="41" cy="46" r="2.8" fill="${INK}"/>
+    <circle cx="57" cy="46" r="2.8" fill="${INK}"/>
+    <path d="M43 54 q6 6 12 0" fill="none" stroke="${INK}" stroke-width="3" stroke-linecap="round"/>
+    <path d="M48 74 c-2.5 5 -4 6.5 -4 9.5 a4.3 4.3 0 0 0 8.6 0 c0 -3 -1.5 -4.5 -4.6 -9.5 z" fill="#8fd0f5" stroke="${INK}" stroke-width="2.5"/>
+    <path d="M76 30 l6 -6 M80 40 l8 -2" stroke="#ffb703" stroke-width="3" stroke-linecap="round"/>
+  </svg>`,
+
+  sure: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="43" cy="43" r="23" fill="#fff6d9" stroke="${INK}" stroke-width="3.5"/>
+    <path d="M60 60 L79 79" stroke="${INK}" stroke-width="7" stroke-linecap="round"/>
+    <path d="M34 43 l7 7 l14 -15" fill="none" stroke="#3fa650" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M18 24 l5 -5" stroke="#ffb703" stroke-width="3" stroke-linecap="round"/>
+  </svg>`,
+
+  hooked: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="50" cy="52" r="31" fill="#ffe8c9" stroke="${INK}" stroke-width="3.5"/>
+    <polygon points="${STAR}" transform="translate(38,46) scale(1.15)" fill="#ffc93c" stroke="${INK}" stroke-width="1.6" stroke-linejoin="round"/>
+    <polygon points="${STAR}" transform="translate(62,46) scale(1.15)" fill="#ffc93c" stroke="${INK}" stroke-width="1.6" stroke-linejoin="round"/>
+    <path d="M39 62 q11 13 22 0 z" fill="#e2574c" stroke="${INK}" stroke-width="2.5" stroke-linejoin="round"/>
+  </svg>`,
+
+  fight: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <rect x="12" y="20" width="42" height="28" rx="9" fill="#ffd9e1" stroke="${INK}" stroke-width="3.5"/>
+    <path d="M24 48 l-3 9 l11 -9 z" fill="#ffd9e1" stroke="${INK}" stroke-width="2.5" stroke-linejoin="round"/>
+    <rect x="44" y="42" width="44" height="28" rx="9" fill="#d7e9ff" stroke="${INK}" stroke-width="3.5"/>
+    <path d="M74 70 l3 9 l-11 -9 z" fill="#d7e9ff" stroke="${INK}" stroke-width="2.5" stroke-linejoin="round"/>
+    <path d="M67 47 l-6 9 h5 l-5 8 l11 -11 h-5 l4 -6 z" fill="#ffb703" stroke="${INK}" stroke-width="2" stroke-linejoin="round"/>
+  </svg>`,
+
+  benefit: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="37" cy="58" r="21" fill="#ffd65a" stroke="${INK}" stroke-width="3.5"/>
+    <circle cx="37" cy="58" r="13.5" fill="none" stroke="#d9a520" stroke-width="2.5"/>
+    <path d="M37 65 q-9 -3 -6.5 -13.5 q11 -.5 6.5 13.5 z" fill="#7cc36b" stroke="${INK}" stroke-width="2"/>
+    <path d="M73 66 V42" stroke="#3fa650" stroke-width="6" stroke-linecap="round"/>
+    <path d="M65 50 l8 -10 l8 10" fill="none" stroke="#3fa650" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M86 26 v9 M81.5 30.5 h9" stroke="#ffb703" stroke-width="3" stroke-linecap="round"/>
+  </svg>`,
+
+  intro: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <rect x="56" y="8" width="34" height="22" rx="8" fill="#dcf2dc" stroke="${INK}" stroke-width="3"/>
+    <path d="M62 30 l-2 8 l10 -8 z" fill="#dcf2dc" stroke="${INK}" stroke-width="2.5" stroke-linejoin="round"/>
+    <text x="73" y="24" text-anchor="middle" font-size="13" font-weight="bold" fill="${INK}" font-family="'Comic Sans MS',cursive">Hi!</text>
+    <circle cx="36" cy="32" r="11.5" fill="#ffe8c9" stroke="${INK}" stroke-width="3"/>
+    <circle cx="32.5" cy="30" r="1.6" fill="${INK}"/>
+    <circle cx="40" cy="30" r="1.6" fill="${INK}"/>
+    <path d="M32 37 q4 3.5 8 0" fill="none" stroke="${INK}" stroke-width="2.5" stroke-linecap="round"/>
+    <path d="M36 43.5 V64" stroke="${INK}" stroke-width="3.5" stroke-linecap="round"/>
+    <path d="M36 50 l-11 9" stroke="${INK}" stroke-width="3.5" stroke-linecap="round"/>
+    <path d="M36 50 l12 -11" stroke="${INK}" stroke-width="3.5" stroke-linecap="round"/>
+    <circle cx="50" cy="37" r="3.4" fill="#ffe8c9" stroke="${INK}" stroke-width="2.5"/>
+    <path d="M36 64 l-8 13 M36 64 l8 13" stroke="${INK}" stroke-width="3.5" stroke-linecap="round"/>
+  </svg>`,
+
+  greet: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <rect x="30" y="46" width="27" height="22" rx="7" fill="#ffe8c9" stroke="${INK}" stroke-width="3"/>
+    <rect x="30" y="28" width="8" height="20" rx="4" fill="#ffe8c9" stroke="${INK}" stroke-width="2.8"/>
+    <rect x="41" y="24" width="8" height="24" rx="4" fill="#ffe8c9" stroke="${INK}" stroke-width="2.8"/>
+    <rect x="52" y="28" width="8" height="20" rx="4" fill="#ffe8c9" stroke="${INK}" stroke-width="2.8"/>
+    <rect x="18" y="44" width="8" height="15" rx="4" transform="rotate(-28 22 51)" fill="#ffe8c9" stroke="${INK}" stroke-width="2.8"/>
+    <path d="M48 14 q6 -5 12 -2" fill="none" stroke="#ffb703" stroke-width="3.2" stroke-linecap="round"/>
+    <path d="M70 30 q8 5 2 12" fill="none" stroke="#ffb703" stroke-width="3.2" stroke-linecap="round"/>
+    <path d="M76 44 q7 5 1 11" fill="none" stroke="#ffb703" stroke-width="3.2" stroke-linecap="round"/>
+  </svg>`,
+
+  famous: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <polygon points="50,21 56.76,38.7 75.67,39.66 60.93,51.55 65.87,69.81 50,59.5 34.13,69.81 39.07,51.55 24.33,39.66 43.24,38.7" fill="#ffc93c" stroke="${INK}" stroke-width="3.5" stroke-linejoin="round"/>
+    <path d="M18 64 v10 M13 69 h10" stroke="#ffb703" stroke-width="3.5" stroke-linecap="round"/>
+    <path d="M80 20 v9 M75.5 24.5 h9" stroke="#ffb703" stroke-width="3.5" stroke-linecap="round"/>
+  </svg>`,
+
+  offended: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="50" cy="52" r="31" fill="#ffe8c9" stroke="${INK}" stroke-width="3.5"/>
+    <path d="M33 41 l11 5" stroke="${INK}" stroke-width="3" stroke-linecap="round"/>
+    <path d="M67 41 l-11 5" stroke="${INK}" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="41" cy="54" r="2.6" fill="${INK}"/>
+    <circle cx="59" cy="54" r="2.6" fill="${INK}"/>
+    <path d="M42 69 q8 -8 16 0" fill="none" stroke="${INK}" stroke-width="3.2" stroke-linecap="round"/>
+    <path d="M69 58 c-2 4 -3.5 5.5 -3.5 8 a3.5 3.5 0 0 0 7 0 c0 -2.5 -1.5 -4 -3.5 -8 z" fill="#8fd0f5" stroke="${INK}" stroke-width="2.2"/>
+  </svg>`,
+
+  surface: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="50" cy="42" r="21" fill="#fff3b0" stroke="${INK}" stroke-width="3.5"/>
+    <rect x="42" y="61" width="16" height="12" rx="3.5" fill="#c9cdd3" stroke="${INK}" stroke-width="3"/>
+    <path d="M45 47 l5 -9 l5 9" fill="none" stroke="#e3a62e" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M50 10 v7 M20 26 l5.5 4.5 M80 26 l-5.5 4.5 M13 48 h7 M87 48 h7" stroke="#ffb703" stroke-width="3.5" stroke-linecap="round"/>
+  </svg>`,
+
+  balloon: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <ellipse cx="45" cy="60" rx="25" ry="12.5" fill="#f49ac1" stroke="${INK}" stroke-width="3.2"/>
+    <path d="M21 60 l-9 -4.5 v9 z" fill="#f49ac1" stroke="${INK}" stroke-width="2.5" stroke-linejoin="round"/>
+    <path d="M45 72.5 q7 7 -1 11.5 q-7 4 1 8" fill="none" stroke="${INK}" stroke-width="2.4" stroke-linecap="round"/>
+    <circle cx="39" cy="57" r="2" fill="${INK}"/>
+    <circle cx="51" cy="57" r="2" fill="${INK}"/>
+    <path d="M38 64 q6 -5.5 12 0" fill="none" stroke="${INK}" stroke-width="2.4" stroke-linecap="round"/>
+    <path d="M74 44 l7 -6 M76 52 l9 -2" stroke="#f49ac1" stroke-width="3" stroke-linecap="round"/>
+  </svg>`,
+
+  blame: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <rect x="14" y="38" width="32" height="26" rx="9" fill="#ffe8c9" stroke="${INK}" stroke-width="3.2"/>
+    <rect x="42" y="42.5" width="38" height="11.5" rx="5.75" fill="#ffe8c9" stroke="${INK}" stroke-width="3.2"/>
+    <path d="M23 38 v7 M31 38 v7 M39 38 v7" stroke="${INK}" stroke-width="2.5" stroke-linecap="round"/>
+    <path d="M84 22 l7 7 M91 22 l-7 7" stroke="#e2574c" stroke-width="3.5" stroke-linecap="round"/>
+    <path d="M76 14 l-3 -6 M84 12 l0 -7" stroke="#e2574c" stroke-width="3" stroke-linecap="round"/>
+  </svg>`,
+
+  shrug: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="50" cy="28" r="12" fill="#ffe8c9" stroke="${INK}" stroke-width="3"/>
+    <circle cx="46" cy="27" r="1.7" fill="${INK}"/>
+    <circle cx="54" cy="27" r="1.7" fill="${INK}"/>
+    <path d="M42.5 22.5 q3.5 -3 7 -0.5" fill="none" stroke="${INK}" stroke-width="2.2" stroke-linecap="round"/>
+    <path d="M50.5 22 q3.5 -2.5 7 0.5" fill="none" stroke="${INK}" stroke-width="2.2" stroke-linecap="round"/>
+    <path d="M47 34 h6" stroke="${INK}" stroke-width="2.6" stroke-linecap="round"/>
+    <path d="M29 60 q21 -17 42 0 v7 a4 4 0 0 1 -4 4 h-34 a4 4 0 0 1 -4 -4 z" fill="#9ec9f5" stroke="${INK}" stroke-width="3"/>
+    <path d="M29 59 l-11 8 M71 59 l11 8" stroke="${INK}" stroke-width="3.5" stroke-linecap="round"/>
+    <circle cx="16.5" cy="69.5" r="4" fill="#ffe8c9" stroke="${INK}" stroke-width="2.6"/>
+    <circle cx="83.5" cy="69.5" r="4" fill="#ffe8c9" stroke="${INK}" stroke-width="2.6"/>
+    <text x="67" y="16" font-size="15" font-weight="bold" fill="${INK}" font-family="'Comic Sans MS',cursive">?</text>
+  </svg>`
+};
+
+const cards = [
+  { ru: "покраснеть от смущения", en: "to blush (from embarrassment)", icon: "blush",   tint: "#ffe1e8" },
+  { ru: "создать благоприятную обстановку для общения (растопить лед)", en: "to create a friendly atmosphere for communication (to break the ice)", icon: "ice", tint: "#d9f0ff", small: true },
+  { ru: "убедиться", en: "to make sure · to be sure", icon: "sure",  tint: "#fff1c6" },
+  { ru: "увлечься чем-либо", en: "to get into sth · to be absorbed in", icon: "hooked", tint: "#e6dcff" },
+  { ru: "закончиться спором", en: "to end in a quarrel / argument", icon: "fight", tint: "#ffe3cd" },
+  { ru: "извлекать пользу из чего-либо", en: "to benefit from · to take advantage of", icon: "benefit", tint: "#ddf2e1" },
+  { ru: "представиться", en: "to introduce oneself", icon: "intro", tint: "#e9e4ff" },
+  { ru: "приветствовать кого-либо", en: "to greet someone", icon: "greet", tint: "#fff0d2" },
+  { ru: "быть известным чем-либо", en: "to be known for (sth)", icon: "famous", tint: "#ffedc2" },
+  { ru: "обижаться", en: "to take offence (at someone)", icon: "offended", tint: "#e2edfb" },
+  { ru: "проявиться", en: "to appear · to surface", icon: "surface", tint: "#fff8c9" },
+  { ru: "чувствовать себя разочарованным", en: "to feel disappointed", icon: "balloon", tint: "#f2e4ff" },
+  { ru: "винить кого-либо", en: "to blame someone", icon: "blame", tint: "#ffe2df" },
+  { ru: "пожать плечами", en: "to shrug (one’s shoulders)", icon: "shrug", tint: "#ddf5ee" }
+];
+
+const grid = document.getElementById("grid");
+cards.forEach((c, i) => {
+  const el = document.createElement("div");
+  el.className = "card";
+  el.tabIndex = 0;
+  el.setAttribute("role", "button");
+  el.setAttribute("aria-pressed", "false");
+  el.setAttribute("aria-label", "Карточка " + (i + 1) + ": " + c.ru + " — нажми, чтобы увидеть перевод");
+  el.style.setProperty("--tilt", (((i * 7) % 5) - 2) * 0.55 + "deg");
+  el.style.setProperty("--tint", c.tint);
+
+  const face = (side, text, lang) => `
+    <div class="face ${side}">
+      <span class="num">${i + 1}</span>
+      <div class="icon">${icons[c.icon]}</div>
+      <div class="txt${c.small ? " small" : ""}">${text}</div>
+      <span class="lang">${lang}</span>
+    </div>`;
+
+  el.innerHTML = `<div class="inner">${face("front", c.ru, "RU")}${face("back", c.en, "EN")}</div>`;
+
+  const flip = () => {
+    const on = el.classList.toggle("flipped");
+    el.setAttribute("aria-pressed", on ? "true" : "false");
+  };
+  el.addEventListener("click", flip);
+  el.addEventListener("keydown", e => {
+    if (e.key === "Enter" || e.key === " ") { e.preventDefault(); flip(); }
+  });
+  grid.appendChild(el);
+});
+
+document.getElementById("flipAll").addEventListener("click", () => {
+  const all = [...document.querySelectorAll(".card")];
+  const anyNotFlipped = all.some(c => !c.classList.contains("flipped"));
+  all.forEach(c => {
+    c.classList.toggle("flipped", anyNotFlipped);
+    c.setAttribute("aria-pressed", anyNotFlipped ? "true" : "false");
+  });
+});
+</script>
+</body>
+</html>
